@@ -38,6 +38,7 @@ if swap_total:
 print(GRAY+"Network:"+RT)
 for interface in sorted(psutil.net_if_stats()):
     if interface in ('lo' 'localhost'):
+        # skip local interface
         continue
     status = GREEN+"●" if psutil.net_if_stats()[interface].isup else RED+"○"
     print(status, interface, RT)
