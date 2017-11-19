@@ -4,7 +4,7 @@ Display human-readable information about system
 
 # Example
 
-![screenshot](exmaple.jpg)
+![screenshot](example.jpg)
 
 # License
 
