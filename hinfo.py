@@ -2,6 +2,7 @@
 
 import psutil
 import colorama
+import tabulate
 
 # Constants
 GREEN = colorama.Fore.GREEN
@@ -35,6 +36,7 @@ if swap_total:
     print(swap_summary)
 
 # Network interfaces
+print()
 print(GRAY+"Network:"+RT)
 for interface in sorted(psutil.net_if_stats()):
     if interface in ('lo' 'localhost'):
@@ -56,3 +58,17 @@ for interface in sorted(psutil.net_if_stats()):
             color = RT
             prefix = GRAY+"ipv4:"+RT
         print(' ', prefix, color+snic.address.split('%')[0], RT)
+
+# Disk info
+print()
+head = [GRAY+'Device', 'mount', 'fs', 'use', 'used/total (GB)'+RT]
+disk_table = []
+for partition in sorted(psutil.disk_partitions()):
+    space = psutil.disk_usage(partition.mountpoint)
+    used = str(round(space.used / (1024 * 1024 * 1024), 2))
+    total = str(round(space.total / (1024 * 1024 * 1024), 2))
+    percent = str(round(space.percent))+"%"
+    disk_table.append([GREEN+partition.device+RT, partition.mountpoint, partition.fstype, CYAN+percent+RT, BLUE+used+RT+"/"+BLUE+total+RT])
+
+print(tabulate.tabulate(disk_table, headers=head, tablefmt="plain"))
+print()
