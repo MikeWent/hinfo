@@ -14,8 +14,8 @@ RT = colorama.Style.RESET_ALL
 
 # CPU
 cpu_cores = psutil.cpu_count()
-cpu_freq = psutil.cpu_freq().current / 1000
-cpu_summary = GRAY+"CPU:"+RT+" {} cores {} GHz".format(cpu_cores, cpu_freq)
+cpu_freq = str(psutil.cpu_freq().current / 1000)+" GHz" if psutil.cpu_freq() else ""
+cpu_summary = GRAY+"CPU:"+RT+" {} cores {}".format(cpu_cores, cpu_freq)
 print(cpu_summary)
 
 # RAM
@@ -28,11 +28,11 @@ print(ram_summary)
 
 # Swap
 swap_total = round(psutil.swap_memory().total / (1024 * 1024))
-swap_used = round(psutil.swap_memory().used / (1024 * 1024))
-swap_free = round(psutil.swap_memory().free / (1024 * 1024))
-swap_percent = round((swap_total - swap_free) / swap_total * 100)
-swap_summary = GRAY+"Swap:"+RT+" {}/{} MB ({}%)".format(swap_used, swap_total, swap_percent)
 if swap_total:
+    swap_used = round(psutil.swap_memory().used / (1024 * 1024))
+    swap_free = round(psutil.swap_memory().free / (1024 * 1024))
+    swap_percent = round((swap_total - swap_free) / swap_total * 100)
+    swap_summary = GRAY+"Swap:"+RT+" {}/{} MB ({}%)".format(swap_used, swap_total, swap_percent)
     print(swap_summary)
 
 # Network interfaces
