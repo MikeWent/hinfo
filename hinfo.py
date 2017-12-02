@@ -14,7 +14,7 @@ RT = colorama.Style.RESET_ALL
 
 # CPU
 cpu_cores = psutil.cpu_count()
-cpu_freq = str(psutil.cpu_freq().current / 1000)+" GHz" if psutil.cpu_freq() else ""
+cpu_freq = str(round(psutil.cpu_freq().current / 1000, 1))+" GHz" if psutil.cpu_freq() else ""
 cpu_summary = GRAY+"CPU:"+RT+" {} cores {}".format(cpu_cores, cpu_freq)
 print(cpu_summary)
 
