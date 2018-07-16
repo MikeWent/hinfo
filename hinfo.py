@@ -44,20 +44,23 @@ for interface in sorted(psutil.net_if_stats()):
         continue
     status = GREEN+"●" if psutil.net_if_stats()[interface].isup else RED+"○"
     print(status, interface, RT)
-    for snic in psutil.net_if_addrs()[interface]:
-        # mac
-        if snic.family == 17:
-            color = BLUE
-            prefix = GRAY+"mac: "+RT
-        # ipv6
-        elif snic.family == 10:
-            color = CYAN
-            prefix = GRAY+"ipv6:"+RT
-        # ipv4
-        elif snic.family == 2:
-            color = RT
-            prefix = GRAY+"ipv4:"+RT
-        print(' ', prefix, color+snic.address.split('%')[0], RT)
+    try:
+        for snic in psutil.net_if_addrs()[interface]:
+            # mac
+            if snic.family == 17:
+                color = BLUE
+                prefix = GRAY+"mac: "+RT
+            # ipv6
+            elif snic.family == 10:
+                color = CYAN
+                prefix = GRAY+"ipv6:"+RT
+            # ipv4
+            elif snic.family == 2:
+                color = RT
+                prefix = GRAY+"ipv4:"+RT
+            print(' ', prefix, color+snic.address.split('%')[0], RT)
+    except:
+        pass
 
 # Disk info
 print()
